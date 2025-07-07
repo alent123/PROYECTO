@@ -1,9 +1,6 @@
 # 📚 Retrolector - Sistema de Biblioteca Digital
 
-[![Laravel](https://img.shields.io/badge/Laravel-10.x-red.svg)](https://laravel.com)
-[![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)](https://php.net)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange.svg)](https://mysql.com)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3+-purple.svg)](https://getbootstrap.com)
+PROFESOR LAS CARPETAS CORRECTAS SON SOLO  retrolector y sql donde tambien esta el informe 
 
 ## 🎯 Descripción
 
