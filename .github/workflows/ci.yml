@@ -1,0 +1,185 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: retrolector_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, xml
+        coverage: xdebug
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-php-
+
+    - name: Install composer dependencies
+      run: |
+        cd retrolector
+        composer install --prefer-dist --no-progress
+
+    - name: Install npm dependencies
+      run: |
+        cd retrolector
+        npm ci
+
+    - name: Copy environment file
+      run: |
+        cd retrolector
+        cp .env.example .env
+
+    - name: Generate application key
+      run: |
+        cd retrolector
+        php artisan key:generate
+
+    - name: Configure database
+      run: |
+        cd retrolector
+        php artisan config:cache
+        php artisan migrate --force
+        php artisan db:seed --force
+
+    - name: Run tests
+      run: |
+        cd retrolector
+        php artisan test --coverage-clover=coverage.xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./retrolector/coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
+
+    - name: Run PHPStan
+      run: |
+        cd retrolector
+        vendor/bin/phpstan analyse --level=8
+
+    - name: Run PHP CS Fixer
+      run: |
+        cd retrolector
+        vendor/bin/php-cs-fixer fix --dry-run --diff
+
+  security:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Install composer dependencies
+      run: |
+        cd retrolector
+        composer install --prefer-dist --no-progress
+
+    - name: Run security check
+      run: |
+        cd retrolector
+        vendor/bin/security-checker security:check composer.lock
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install npm dependencies
+      run: |
+        cd retrolector
+        npm ci
+
+    - name: Build assets
+      run: |
+        cd retrolector
+        npm run build
+
+    - name: Create release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: Release v${{ github.run_number }}
+        body: |
+          Automated release for commit ${{ github.sha }}
+          
+          Changes in this release:
+          - Automated build and test pipeline
+          - Security checks passed
+          - All tests passing
+        draft: false
+        prerelease: false
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+
+    steps:
+    - name: Deploy to staging
+      run: |
+        echo "Deploying to staging environment..."
+        # Add your staging deployment commands here
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+    - name: Deploy to production
+      run: |
+        echo "Deploying to production environment..."
+        # Add your production deployment commands here 
