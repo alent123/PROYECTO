@@ -1,278 +1,118 @@
 # 📚 Retrolector - Sistema de Biblioteca Digital
 
-[![Laravel](https://img.shields.io/badge/Laravel-10.x-red.svg)](https://laravel.com)
-[![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)](https://php.net)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange.svg)](https://mysql.com)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3+-purple.svg)](https://getbootstrap.com)
-
-## 🎯 Descripción
-
-**Retrolector** es un sistema completo de gestión de biblioteca digital desarrollado en Laravel que permite a los usuarios explorar, comprar, prestar y gestionar libros digitales. El sistema incluye funcionalidades avanzadas para administradores y una experiencia de usuario moderna e intuitiva.
-
-## ✨ Características Principales
-
-### 🔐 Sistema de Autenticación Dual
-- **Login de Clientes**: Acceso exclusivo para usuarios registrados
-- **Login de Administradores**: Panel administrativo con permisos especiales
-- Registro de usuarios con validación completa
-- Gestión de sesiones y seguridad
-
-### 📖 Gestión de Libros
-- **Catálogo completo** con filtros avanzados
-- **4 modalidades de precio**: Compra física, compra online, préstamo físico, préstamo online
-- **Vista previa gratuita** de libros
-- **Gestión de stock** en tiempo real
-- **Sistema de ubicación** para libros físicos
-- **Subida de portadas** e imágenes
-- **Archivos PDF** para lectura digital
-
-### 👥 Panel de Usuario
-- Dashboard personalizado con estadísticas
-- **Gestión de préstamos** y reservas
-- **Sistema de favoritos**
-- **Historial de compras** y préstamos
-- **Notificaciones** en tiempo real
-- **Mensajería interna**
-- **Reseñas y calificaciones**
-- **Análisis de lectura**
-
-### 🛠️ Panel de Administración
-- **Gestión completa de libros** (CRUD)
-- **Administración de usuarios**
-- **Control de préstamos** y reservas
-- **Moderación de reseñas**
-- **Gestión de categorías** y autores
-- **Reportes y estadísticas**
-- **Sistema de notificaciones**
-
-### 🎨 Interfaz Moderna
-- **Diseño responsive** con Bootstrap 5
-- **Tema claro/oscuro**
-- **Animaciones** y transiciones suaves
-- **Iconografía** FontAwesome
-- **UX/UI optimizada**
-
-## 🚀 Tecnologías Utilizadas
-
-### Backend
-- **Laravel 10.x** - Framework PHP
-- **PHP 8.2+** - Lenguaje de programación
-- **MySQL 8.0+** - Base de datos
-- **Eloquent ORM** - Mapeo objeto-relacional
-
-### Frontend
-- **Bootstrap 5.3** - Framework CSS
-- **FontAwesome 6** - Iconos
-- **JavaScript ES6+** - Interactividad
-- **Animate.css** - Animaciones
-
-### Herramientas
-- **Composer** - Gestión de dependencias
-- **Artisan** - CLI de Laravel
-- **Git** - Control de versiones
-
-## 📋 Requisitos del Sistema
-
-- **PHP**: 8.2 o superior
-- **Composer**: Última versión estable
-- **MySQL**: 8.0 o superior
-- **Node.js**: 16+ (para compilación de assets)
-- **Servidor web**: Apache/Nginx
-- **Extensiones PHP**: BCMath, Ctype, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML
-
-## 🛠️ Instalación
-
-### 1. Clonar el Repositorio
-```bash
-git clone https://github.com/alent123/PROYECTO.git
-cd PROYECTO
-```
-
-### 2. Instalar Dependencias
-```bash
-cd retrolector
-composer install
-npm install
-```
-
-### 3. Configurar Variables de Entorno
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-Editar `.env` con la configuración de tu base de datos:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=retrolector
-DB_USERNAME=tu_usuario
-DB_PASSWORD=tu_contraseña
-```
-
-### 4. Ejecutar Migraciones
-```bash
-php artisan migrate
-php artisan db:seed
-```
-
-### 5. Configurar Storage
-```bash
-php artisan storage:link
-```
-
-### 6. Compilar Assets (Opcional)
-```bash
-npm run dev
-# o para producción
-npm run build
-```
-
-### 7. Configurar Permisos
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-## 🗄️ Base de Datos
-
-### Estructura Principal
-- **usuarios**: Gestión de usuarios y administradores
-- **libros**: Catálogo completo de libros
-- **autors**: Información de autores
-- **categorias**: Categorías de libros
-- **prestamos**: Sistema de préstamos
-- **reservas**: Sistema de reservas
-- **compras**: Historial de compras
-- **resenas**: Sistema de reseñas
-- **favoritos**: Libros favoritos de usuarios
-- **notificaciones**: Sistema de notificaciones
-
-### Características de la Base de Datos
-- **Relaciones complejas** entre tablas
-- **Índices optimizados** para búsquedas
-- **Claves foráneas** para integridad referencial
-- **Campos de auditoría** (created_at, updated_at)
-- **Soft deletes** para eliminación segura
-
-## 🎮 Uso del Sistema
-
-### Para Usuarios
-1. **Registro**: Crear cuenta en `/register`
-2. **Login**: Acceder en `/login`
-3. **Explorar**: Navegar por el catálogo en `/books/catalog`
-4. **Comprar/Prestar**: Seleccionar modalidad de adquisición
-5. **Gestionar**: Acceder al dashboard en `/user/dashboard`
-
-### Para Administradores
-1. **Login**: Acceder en `/admin-login`
-2. **Dashboard**: Panel principal en `/admin/dashboard`
-3. **Gestión de Libros**: `/admin/books`
-4. **Gestión de Usuarios**: `/admin/users`
-5. **Reportes**: `/admin/reports`
-
-## 🔧 Configuración Avanzada
-
-### Personalización de Temas
-El sistema soporta temas personalizables:
-- Modificar variables CSS en `resources/css/app.css`
-- Configurar colores en `config/app.php`
-- Personalizar layouts en `resources/views/layouts/`
-
-### Configuración de Email
-```env
-MAIL_MAILER=smtp
-MAIL_HOST=tu_servidor_smtp
-MAIL_PORT=587
-MAIL_USERNAME=tu_email
-MAIL_PASSWORD=tu_contraseña
-MAIL_ENCRYPTION=tls
-```
-
-### Configuración de Archivos
-```env
-FILESYSTEM_DISK=public
-```
-
-## 📊 Características Técnicas
-
-### Seguridad
-- **Autenticación** con middleware personalizado
-- **Validación** de formularios robusta
-- **CSRF protection** habilitada
-- **Sanitización** de datos de entrada
-- **Control de acceso** basado en roles
-
-### Rendimiento
-- **Caché** de consultas frecuentes
-- **Paginación** optimizada
-- **Lazy loading** de relaciones
-- **Compresión** de assets
-- **Optimización** de consultas SQL
-
-### Escalabilidad
-- **Arquitectura MVC** modular
-- **Separación** de responsabilidades
-- **Código reutilizable** y mantenible
-- **Documentación** completa
-- **Tests** unitarios (preparado)
-
-## 🐛 Solución de Problemas
-
-### Errores Comunes
-
-**Error de permisos:**
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-**Error de migración:**
-```bash
-php artisan migrate:fresh --seed
-```
-
-**Error de storage:**
-```bash
-php artisan storage:link
-```
-
-**Error de dependencias:**
-```bash
-composer install --no-dev
-```
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📝 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 👨‍💻 Autor
-
-**Alejandro López**
-- GitHub: [@alent123](https://github.com/alent123)
-- Email: contacto@retrolector.com
-
-## 🙏 Agradecimientos
-
-- **Laravel Team** por el framework
-- **Bootstrap Team** por el framework CSS
-- **FontAwesome** por los iconos
-- **Comunidad open source** por las librerías utilizadas
-
-## 📞 Soporte
-
-Si tienes alguna pregunta o necesitas ayuda:
-- 📧 Email: soporte@retrolector.com
-- 🐛 Issues: [GitHub Issues](https://github.com/alent123/PROYECTO/issues)
-- 📖 Wiki: [Documentación completa](https://github.com/alent123/PROYECTO/wiki)
+**Retrolector** es un sistema avanzado de gestión de biblioteca digital desarrollado en Laravel. Permite a usuarios explorar, comprar, prestar y gestionar libros físicos y digitales, y a los administradores controlar todo el catálogo y la experiencia de la biblioteca.
 
 ---
 
-⭐ **¡No olvides dar una estrella al proyecto si te ha sido útil!** 
+## 🚀 Características Destacadas
+
+### 🔐 Autenticación y Roles
+- Login y registro diferenciados para usuarios y administradores
+- Seguridad robusta y gestión de sesiones
+
+### 📖 Gestión de Libros
+- Catálogo con filtros avanzados: por estado, disponibilidad, tipo, fechas, badges visuales (Nuevo, Sin stock, Solo online, Solo físico, Con PDF)
+- Modalidades: Compra física, compra online, préstamo físico, préstamo online
+- Vista previa gratuita configurable
+- Subida de portadas y PDF
+- Gestión de stock y ubicación
+- Edición y creación con previsualización en tiempo real
+
+### 👤 Panel de Usuario
+- Dashboard con estadísticas y recomendaciones
+- Sección “Tus libros” con tabs: Compra Física, Compra Online, Préstamo Físico, Préstamo Online
+- Acciones contextuales: leer, descargar, mensajes de estado
+- Favoritos, historial, reservas, notificaciones y mensajería interna
+- Análisis de lectura y reseñas
+
+### 🛠️ Panel de Administración
+- Gestión integral de libros, usuarios, autores y categorías
+- Panel de estadísticas rápidas: libros creados, préstamos, ventas, sugerencias
+- Filtros avanzados y contadores visuales en el catálogo
+- Acciones rápidas: editar, eliminar, vista previa, ver como usuario
+- Moderación de reseñas y reportes
+- Alertas automáticas (stock bajo, préstamos vencidos, reseñas pendientes)
+
+### 🎨 Interfaz Moderna
+- Sidebar y colores tipo biblioteca
+- Diseño responsive y accesible
+- Animaciones, badges y toasts para feedback visual
+- UX/UI profesional y amigable
+
+---
+
+## 🛠️ Tecnologías
+- **Laravel 10.x** (PHP 8.2+)
+- **MySQL 8.0+**
+- **Bootstrap 5.3**, **FontAwesome 6**, **Animate.css**
+- **JavaScript ES6+**
+- **Composer**, **Artisan**, **Git**
+
+---
+
+## 📋 Instalación Rápida
+
+```bash
+git clone https://github.com/alent123/PROYECTO.git
+cd PROYECTO/retrolector
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+# Edita .env con tus datos de base
+php artisan migrate --seed
+php artisan storage:link
+npm run dev # o npm run build para producción
+```
+
+---
+
+## 🗄️ Base de Datos
+- Tablas: usuarios, libros, autors, categorias, prestamos, reservas, compras, resenas, favoritos, notificaciones
+- Relaciones y claves foráneas bien definidas
+- Triggers y procedimientos para stock y vencimientos
+- Seeders y datos de ejemplo incluidos
+
+---
+
+## 🎮 Uso del Sistema
+
+### Usuarios
+- Registro y login en `/register` y `/login`
+- Explora el catálogo, compra o solicita préstamos
+- Gestiona tus libros en tabs claros y visuales
+- Recibe notificaciones y mensajes
+
+### Administradores
+- Login en `/admin-login`
+- Dashboard con estadísticas y alertas
+- Gestión avanzada de libros, usuarios, autores y categorías
+- Filtros y acciones rápidas en el catálogo
+- Moderación y reportes
+
+---
+
+## 🔧 Personalización y Configuración
+- Temas y colores editables en `resources/css/app.css` y `config/app.php`
+- Configuración de email y archivos en `.env`
+- Layouts personalizables en `resources/views/layouts/`
+
+---
+
+## 🏆 Experiencia y Lógica
+- Todas las reglas de negocio están alineadas entre backend y frontend
+- Lógica de disponibilidad, stock, badges y acciones consistente
+- Experiencia moderna, profesional y lista para producción
+
+---
+
+## 📈 Mejoras Futuras Sugeridas
+- Acciones masivas y exportación de reportes
+- Panel de analíticas avanzado
+- Notificaciones push/email
+- Auditoría y logs
+- Pruebas automatizadas
+
+---
+
+**Retrolector** es la solución ideal para bibliotecas modernas, con una base sólida, lógica coherente y una experiencia de usuario/admin de primer nivel. 
