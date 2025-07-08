@@ -1,6 +1,8 @@
 # 📚 Retrolector - Sistema de Biblioteca Digital
 
 **Retrolector** es un sistema avanzado de gestión de biblioteca digital desarrollado en Laravel. Permite a usuarios explorar, comprar, prestar y gestionar libros físicos y digitales, y a los administradores controlar todo el catálogo y la experiencia de la biblioteca.
+PROFESOR LA CARPETA DOND ESTA GUARDADO EL PROYECTO ESTA EN EL DRIVE, EL LINK DEL DRIVE ESTA EN EL WORD HASTA ABAJO DONDE DICE DRIVE JUNTO AL VIDEO 
+
 
 ---
 
